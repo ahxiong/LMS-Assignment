@@ -15,13 +15,6 @@ public class MTable extends JScrollPane{
 	
 	
 	public void myConfiguration(){
-		table.setRowHeight(30);
-		
-		table.setFont(new Font("Consolas", Font.PLAIN, 18));
-		table.getTableHeader().setForeground(Color.RED);
-		table.getTableHeader().setAlignmentX(RIGHT_ALIGNMENT);
-		table.getTableHeader().setFont(new Font("Consolas", Font.PLAIN, 22));
-		
 		int indent =3;
 
 

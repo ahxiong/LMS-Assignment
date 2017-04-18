@@ -5,17 +5,23 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 
 /**
  * Created by Mister_Brown on 7/30/2016.
  */
-public class MTextField extends JTextField {
+public class MTextField extends JTextField implements MouseListener {
     private Border rounded = new LineBorder(new Color(210,210,210), 1, true);
     private Border empty = new EmptyBorder(0, 10, 0, 0);
 
 
+   
     public MTextField(){
 //        setForeground(new Color(0, 39, 186));
         setOpaque(false);
@@ -35,14 +41,23 @@ public class MTextField extends JTextField {
     @Override
     public void setEditable(boolean b) {
         super.setEditable(b);
-        if(b==false)
-        this.setForeground(Color.RED);
+        
+        if(b==false){
+        	this.setForeground(Color.RED);
+        	setEnabled(false);
+        }
+        
     }
 
     public MTextField(int x, int y, int width, int hieght ) {
         this();
         setBounds(new Rectangle(x,y,width,hieght));
 
+    }
+
+    public void setHint(String hint){
+    	PromptSupport.setForeground(Color.decode("#BDBDBD"), this);
+        PromptSupport.setPrompt(hint,this);
     }
 
     private Shape shape;
@@ -60,5 +75,31 @@ public class MTextField extends JTextField {
             shape = new RoundRectangle2D.Float(0, 0, getWidth()-1, getHeight()-1, 15, 15);
         }
         return shape.contains(x, y);
+    }
+    
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        setBorder(new borderFocus());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        setBorder(new borderFocus());
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        setBorder(new roundBorder());
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        setBorder(new borderFocus());
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        setBorder(new roundBorder());
     }
 }

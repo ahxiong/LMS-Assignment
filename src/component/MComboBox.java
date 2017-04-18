@@ -16,9 +16,16 @@ import java.awt.event.MouseListener;
 public class MComboBox extends JComboBox implements MouseListener{
 	 
 
-
-    public MComboBox(){
-        setOpaque(false);
+	public MComboBox(int LocationX, int LocationY, int Width, int Height, String[] arrayString){
+		
+        this(arrayString);
+        setLocation(LocationX,LocationY);
+        setSize(Width,Height);
+    }
+	
+    public MComboBox(String[] arrayString){
+        super(arrayString);
+    	setOpaque(false);
         setBorder(javax.swing.BorderFactory.createEmptyBorder());
         setFont(new Font("Consolas", Font.PLAIN, 22));
         requestFocusInWindow();
@@ -35,7 +42,10 @@ public class MComboBox extends JComboBox implements MouseListener{
             }
         });
         addMouseListener(this);
-
+    }
+    
+    public MComboBox(){
+    	this(new String[]{"",""});
     }
 
 

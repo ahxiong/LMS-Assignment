@@ -56,7 +56,7 @@ public class MemberForm {
 
 
         MLabel lblGender = new MLabel(460, 258 + spacing, 300, 25, "Gender");
-        MTextField txtGender = new MTextField(453, 282 + spacing, 300, 40);
+        MComboBox txtGender = new MComboBox(453, 282 + spacing, 300, 40,new String[]{" Male"," Female"});
 
         MLabel lblAddress = new MLabel(460, 258 + spacing * 2, 300, 25, "Address");
         MTextArea txtAddress = new MTextArea(453, 282 + spacing * 2, 300, 120);
@@ -85,6 +85,10 @@ public class MemberForm {
             frame.repaint();
         
 
+            if(parent ==null){
+             	dialog.setTitle("UPDATING MEMBER(S)");
+             	title.setText("UPDATE THE MEMBER(S)");
+     		        }
 // will display for the update and add but just different time
         frame.add(title);
         frame.add(image);
@@ -118,8 +122,8 @@ public class MemberForm {
     
 
     public static void SearchMember(JFrame parent){
-        int frameWidth =700;
-        int frameHeight =798;
+        int frameWidth =1000;
+        int frameHeight =700;
         int spacing =75;
         int adjust =65;
 
@@ -127,11 +131,12 @@ public class MemberForm {
         dialog.setSize(new Dimension(frameHeight,frameWidth));
         dialog.setLayout(new BorderLayout(20,10));
         dialog.setTitle("SEARCH/ UPDATE/ DELETE MEMBER(S)" );
+        dialog.setSize(frameWidth,frameHeight);
 
         JPanel frame = new JPanel(new BorderLayout());
         frame.setLayout(null);
         frame.setBackground(Color.WHITE);
-        frame.setSize(frameWidth,frameHeight);
+        
 
         JPanel topPanel = new JPanel();
         MTextField txtSearch = new MTextField();
@@ -146,14 +151,24 @@ public class MemberForm {
 
         cbType.addItem(" Filter By");
         
-        String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
+        String[] columnNames = {
+    			"ID",
+    			"NAME",
+    			"GENDER",
+    			"REGISTER",
+    			"PHONE NUMBER",
+    			"EMAIL",
+    			"ADDRESS"};
 
-        String data[] = 
-                {"Kathy", "Smith","Snowboarding", "5", "False"};
+    String data[] = 
+            	{	"A001",
+            		"YOEUN SAMRITH", 
+            		"male",
+            		"10/29/2013",
+            		"010532524",
+            		"samrith.yoeun@gmail.com",
+            		"Phnom Penh"};
+
 
 
        
@@ -175,6 +190,8 @@ public class MemberForm {
     			btnUpdateBook.setFont(new Font("arial", Font.BOLD, 18));
     		MButton btnDeleteBook= new MButton("DELETE");
     			btnDeleteBook.setFont(new Font("arial", Font.BOLD, 18));
+    	
+    			
     			
     	bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
     	bottomPanel.add(btnUpdateBook);

@@ -5,13 +5,20 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 
 /**
  * Created by Mister_Brown on 9/10/2016.
  */
-public class MTextArea extends JTextArea {
+public class MTextArea extends JTextArea implements FocusListener {
     private Border rounded = new LineBorder(new Color(210,210,210), 1, true);
     private Border empty = new EmptyBorder(0, 10, 0, 0);
 
@@ -20,7 +27,6 @@ public class MTextArea extends JTextArea {
         setFont(new Font("Consolas", Font.PLAIN, 22));
         setOpaque(false);
         setBorder(javax.swing.BorderFactory.createEmptyBorder());
-
         setBorder(rounded);
         Border border = new CompoundBorder(rounded, empty);
         setBorder(border);
@@ -38,8 +44,14 @@ public class MTextArea extends JTextArea {
         setBounds(new Rectangle(x,y,width,hieght));
 
     }
+    
+    public MTextArea(int x, int y, int width, int hieght,String hint ) {
+        this(x,y,width,hieght);
+        PromptSupport.setForeground(Color.decode("#616161"), this);
+        PromptSupport.setPrompt(hint,this);
+        
 
-
+    }
     private Shape shape;
 
     protected void paintComponent(Graphics g) {
@@ -56,5 +68,20 @@ public class MTextArea extends JTextArea {
         }
         return shape.contains(x, y);
     }
+
+	@Override
+	public void focusGained(FocusEvent arg0) {
+		new borderFocus();
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent arg0) {
+		new roundBorder();
+		
+	}
+
+
+  
 
 }

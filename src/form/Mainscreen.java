@@ -3,11 +3,15 @@ package form;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import component.*;
+import data.Database;
 
 public class Mainscreen {
 	MLabel title;
@@ -40,10 +44,11 @@ public class Mainscreen {
     
 	
 	
-	public Mainscreen(){
+	public void show(){
 		JFrame frame = new JFrame();
-		frame.setSize(1000,550);
-		frame.setMinimumSize(new Dimension(890,510));
+		frame.setSize(1000,640);
+		frame.setLocationRelativeTo(null);
+		frame.setMinimumSize(new Dimension(970,600));
 		frame.setLayout(new BorderLayout());
 		frame.setTitle("LIBRARY MANAGEMENT SYSTEM");
 		title = new MLabel("<html><strong>LIBRARY MANAGEMENT SYSTEM</strong><br>powered by group5 of scholarship class</html>");
@@ -168,7 +173,10 @@ public class Mainscreen {
 				mainMenu.setText("<html><strong><u>MAIN-MENU</u></strong></html>");
 			}
 			else{
-				op.show(frame,"ABOUT US!","CREATED BY SAMRITH-YOEUN");
+//				op.show(frame,"ABOUT US!","CREATED BY SAMRITH-YOEUN");
+				Database data = new Database();
+				data.connect();
+				
 			}
 		});
 		
@@ -207,9 +215,10 @@ public class Mainscreen {
 	}
 	
 	
-	
 	public static void main(String arg[]){
-		new Mainscreen();
+		Login login = new Login();
+		login.login();
+		
 	}
 
 

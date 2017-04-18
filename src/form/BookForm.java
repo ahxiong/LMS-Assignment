@@ -5,7 +5,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import component.*;
+import data.StaticData;
+
 import java.awt.*;
 
 public class BookForm {
@@ -13,13 +17,12 @@ public class BookForm {
         int frameWidth =798;
         int frameHeight =700;
         int spacing =75;
-        
-
+      
         JDialog dialog = new JDialog(parent);
         dialog.setResizable(false);
         dialog.setTitle("ADDING NEW BOOK(S)");
         JPanel frame = new JPanel();
-
+        
         frame.setLayout(null);
         frame.setBackground(new Color(236, 236, 236));
         frame.setSize(frameWidth,frameHeight);
@@ -50,25 +53,60 @@ public class BookForm {
 
 
         MLabel lblCategory = new MLabel(460, 258 + spacing, 300, 25, "Category");
-        MTextField txtCategory = new MTextField(453, 282 + spacing, 300, 40);
+        MComboBox txtCategory = new MComboBox(453, 284 + spacing, 300, 40,StaticData.BookCategories());
 
         MLabel lblAuthor = new MLabel(460, 258 + spacing * 2, 300, 25, "Author");
-        MTextField txtAuthor = new MTextField(453, 282 + spacing * 2, 300, 40);
+        MTextField txtAuthor = new MTextField(453, 284 + spacing * 2, 300, 40);
 
         MLabel lblYear = new MLabel(460, 258 + spacing * 3, 300, 25, "Year\\Edition");
         MTextField txtYear = new MTextField(453, 282 + spacing * 3, 300, 40);
 
         frame.setLocation(MFrame.CenterScreen(frame));
 
-        
-        
+ 
 //       the two button ADD and CANCEL
          MButton btnCancel = new MButton(453, 282 + spacing * 4, 135, 40, "Cancel");
          MButton btnAdd = new MButton(453 + 165, 282 + spacing * 4, 135, 40, "Add");
-
+         btnCancel.addActionListener(e->{
+        	 MOptionPane.showMessageDialog(null, txtBookName.getText());
+         });
+         btnAdd.addActionListener(e->{
+        	 int qty=0;
+        	 try{
+    			 qty = Integer.parseInt(txtQuantity.getText()) ;
+    		 }catch(Exception ex){
+    			 MOptionPane.showMessageDialog(dialog, "Invalid Input at Integer");
+    		 }
+        	 Object[] data= {
+        		 0,//id
+        		 txtBookName.getText(),
+        		 txtISBN.getText(),
+        		 txtCategory.getSelectedItem().toString(),
+        		 txtAccessionCode.getText(),
+        		 txtAuthor.getText(),
+        		 txtLanguage.getText(),
+        		 txtYear.getText(),
+        		 qty
+        	 };
+        	 
+        	 MOptionPane.showMessageDialog(dialog, 0+"--"+//id
+                     txtBookName.getText()+"--"+
+                     txtISBN.getText()+"--"+
+                     txtCategory.getSelectedItem().toString()+"--"+
+                     txtAccessionCode.getText()+"--"+
+                     txtAuthor.getText()+"--"+
+                     txtLanguage.getText()+"--"+
+                     txtYear.getText()+"--"+
+                     qty);
+         });
              frame.add(btnAdd);
              frame.add(btnCancel);
         
+             if(parent ==null){
+             	dialog.setTitle("UPDATING BOOK(S)");
+             	title.setText("UPDATE THE BOOK(S)");
+     		        }
+     
         frame.add(title);
         frame.add(image);
 
@@ -99,8 +137,8 @@ public class BookForm {
     }
 	
     public static void SearchBook(JFrame parent){
-        int frameWidth =700;
-        int frameHeight =798;
+        int frameWidth =1000;
+        int frameHeight =700;
         int spacing =75;
         int adjust =65;
 
@@ -108,17 +146,22 @@ public class BookForm {
         dialog.setSize(new Dimension(frameHeight,frameWidth));
         dialog.setLayout(new BorderLayout(20,10));
         dialog.setTitle("SEARCH/ UPDATE/ DELETE BOOK(S)" );
-
+        
         JPanel frame = new JPanel(new BorderLayout());
         frame.setLayout(null);
         frame.setBackground(Color.WHITE);
-        frame.setSize(frameWidth,frameHeight);
+        dialog.setSize(frameWidth,frameHeight);
 
         JPanel topPanel = new JPanel();
         MTextField txtSearch = new MTextField();
-        txtSearch.setText("Search for ....");
-        MComboBox cbType= new MComboBox();
+        txtSearch.setHint("Searching for......");
+       
+        MComboBox cbType= new MComboBox(StaticData.SearchBook());
         MButton btnSearch = new MButton("Search");
+        
+        btnSearch.requestFocus(true);
+        
+        
 
         topPanel.setBorder(new EmptyBorder(20,0,5,0));
         topPanel.add(txtSearch,BorderLayout.CENTER);
@@ -127,14 +170,25 @@ public class BookForm {
 
         cbType.addItem(" Filter By");
         
-        String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
+        String[] columnNames = {
+        			"ISBN",
+        			"TITLE",
+        			"ACCESS CODE",
+        			"CATEGORY",
+        			"AUTHOR",
+        			"LANGUAGE",
+        			"EDITION",
+        			"QTY"};
 
         String data[] = 
-                {"Kathy", "Smith","Snowboarding", "5", "False"};
+                	{	"102283",
+                		"C Programming", 
+                		"B001",
+                		"Programming",
+                		"SAMRITH YOEUN",
+                		"12",
+                		"Khmer",
+                		"20"};
 
 
        
@@ -161,6 +215,11 @@ public class BookForm {
     	bottomPanel.add(btnUpdateBook);
     	bottomPanel.add(btnDeleteBook);
     	bottomPanel.setBorder(new EmptyBorder(20,20,20,20));
+    	
+    	btnUpdateBook.addActionListener(e->{
+    		BookForm book = new BookForm();
+    		book.AddBooks(null);
+    	});
     	
     	dialog.add(tbl,BorderLayout.CENTER);
     	dialog.add(bottomPanel,BorderLayout.SOUTH);
